@@ -3,6 +3,7 @@ package com.betrybe.calcuradoradeidade.controller;
 import com.betrybe.calcuradoradeidade.dto.DateDto;
 import com.betrybe.calcuradoradeidade.dto.ErrorMessageDto;
 import com.betrybe.calcuradoradeidade.exception.FutureDateException;
+import com.betrybe.calcuradoradeidade.exception.InvalidSyntaxDateException;
 import com.betrybe.calcuradoradeidade.service.AgeCalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,6 +44,20 @@ public class AgeCalculatorController implements AgeCalculatorControllerInterface
   @ExceptionHandler({FutureDateException.class})
   public ResponseEntity<ErrorMessageDto> handleFutureDateException(FutureDateException exception) {
     return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(
+        new ErrorMessageDto(exception.getMessage())
+    );
+  }
+
+  /**
+   * Handle invalid syntax date exception response entity.
+   *
+   * @param exception the exception
+   * @return the response entity
+   */
+  @ExceptionHandler({InvalidSyntaxDateException.class})
+  public ResponseEntity<ErrorMessageDto>
+      handleInvalidSyntaxDateException(InvalidSyntaxDateException exception) {
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
         new ErrorMessageDto(exception.getMessage())
     );
   }

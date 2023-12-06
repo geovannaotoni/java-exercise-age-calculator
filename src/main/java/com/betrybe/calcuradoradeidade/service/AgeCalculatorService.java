@@ -1,6 +1,7 @@
 package com.betrybe.calcuradoradeidade.service;
 
 import com.betrybe.calcuradoradeidade.exception.FutureDateException;
+import com.betrybe.calcuradoradeidade.exception.InvalidSyntaxDateException;
 import java.time.LocalDate;
 import java.time.Period;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class AgeCalculatorService {
    * @return the int
    */
   public int calculateAge(String date) {
+    validateSyntax(date);
     LocalDate localDate = LocalDate.parse(date);
     LocalDate now = LocalDate.now();
     int age = Period.between(localDate, now).getYears();
@@ -26,6 +28,19 @@ public class AgeCalculatorService {
       throw  new FutureDateException("This is a future date.");
     }
     return age;
+  }
+
+  private void validateSyntax(String date) throws InvalidSyntaxDateException {
+    String[] dateBlocks = date.split("-");
+    if (dateBlocks.length != 3) {
+      throw new InvalidSyntaxDateException("Invalid date format. Expected aa-mm-dd.");
+    }
+    String year = dateBlocks[0];
+    String month = dateBlocks[1];
+    String day = dateBlocks[2];
+    if (year.length() != 4 || month.length() != 2 || day.length() != 2) {
+      throw new InvalidSyntaxDateException("Invalid date format. Expected aa-mm-dd.");
+    }
   }
 
   public int calculateAgeWithDefault(String date, int defaultAge) {
