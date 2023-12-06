@@ -56,6 +56,13 @@ public class AgeCalculatorService {
     }
   }
 
+  /**
+   * Calculate age with default int.
+   *
+   * @param date       the date
+   * @param defaultAge the default age
+   * @return the int
+   */
   public int calculateAgeWithDefault(String date, int defaultAge) {
     try {
       int age = calculateAge(date);
