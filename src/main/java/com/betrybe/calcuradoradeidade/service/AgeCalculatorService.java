@@ -10,6 +10,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AgeCalculatorService {
+
+  /**
+   * Calculate age int.
+   *
+   * @param date the date
+   * @return the int
+   */
   public int calculateAge(String date) {
     LocalDate localDate = LocalDate.parse(date);
     LocalDate now = LocalDate.now();
