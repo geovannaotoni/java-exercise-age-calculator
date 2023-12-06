@@ -1,5 +1,6 @@
 package com.betrybe.calcuradoradeidade.service;
 
+import com.betrybe.calcuradoradeidade.exception.FutureDateException;
 import java.time.LocalDate;
 import java.time.Period;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,11 @@ public class AgeCalculatorService {
   public int calculateAge(String date) {
     LocalDate localDate = LocalDate.parse(date);
     LocalDate now = LocalDate.now();
-    return Period.between(localDate, now).getYears();
+    int age = Period.between(localDate, now).getYears();
+    if (age < 0) {
+      throw  new FutureDateException("This is a future date.");
+    }
+    return age;
   }
 
   public int calculateAgeWithDefault(String date, int defaultAge) {
